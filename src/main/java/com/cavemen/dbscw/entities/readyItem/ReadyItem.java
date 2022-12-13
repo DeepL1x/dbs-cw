@@ -16,7 +16,7 @@ public class ReadyItem {
     private Long availableItemAmount;
     private String storagePlace;
     private Double price;
-    private String unitOfMeasure;
+    private String measureUnit;
     @OneToOne
     @MapsId
     @JoinColumn(name = "ready_item_id")
@@ -32,7 +32,7 @@ public class ReadyItem {
         this.availableItemAmount = availableItemAmount;
         this.storagePlace = storagePlace;
         this.price = price;
-        this.unitOfMeasure = unitOfMeasure;
+        this.measureUnit = unitOfMeasure;
     }
 
     public String getId() {
@@ -83,12 +83,12 @@ public class ReadyItem {
         this.price = price;
     }
 
-    public String getUnitOfMeasure() {
-        return unitOfMeasure;
+    public String getMeasureUnit() {
+        return measureUnit;
     }
 
-    public void setUnitOfMeasure(String integer) {
-        this.unitOfMeasure = integer;
+    public void setMeasureUnit(String integer) {
+        this.measureUnit = integer;
     }
 
     @Override
@@ -100,7 +100,7 @@ public class ReadyItem {
                 ", availableItemAmount=" + availableItemAmount +
                 ", storagePlace='" + storagePlace + '\'' +
                 ", price=" + price +
-                ", integer='" + unitOfMeasure + '\'' +
+                ", measureUnit='" + measureUnit + '\'' +
                 '}';
     }
 }

@@ -8,25 +8,28 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "article")
 public class Article {
     @Id
-    @GeneratedValue(
-            generator = "article_uuid"
-    )
     @GenericGenerator(
-            name = "article_uuid",
-            strategy = "uuid"
+            name = "article_id",
+            strategy = "com.cavemen.dbscw.entities.article.ArticleIdGenerator"
     )
-    @Column(name = "article_id")
+    @GeneratedValue(generator = "article_id")
+    @Column(
+            name = "article_id",
+            length = 8
+    )
     private String id;
-    private String nameOfProductUA;
-    private String nameOfProductEN;
-    private String nameOfSupplier;
+    @Column(name = "ua_product_name")
+    private String productNameUA;
+    @Column(name = "en_product_name")
+    private String productNameEN;
+    private String supplierName;
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private ReadyItem readyItem;
     public Article(String nameOfProductUA, String nameOfProductEN, String nameOfSupplier) {
-        this.nameOfProductUA = nameOfProductUA;
-        this.nameOfProductEN = nameOfProductEN;
-        this.nameOfSupplier = nameOfSupplier;
+        this.productNameUA = nameOfProductUA;
+        this.productNameEN = nameOfProductEN;
+        this.supplierName = nameOfSupplier;
     }
 
     public Article() {
@@ -41,37 +44,37 @@ public class Article {
         this.id = id;
     }
 
-    public String getNameOfProductUA() {
-        return nameOfProductUA;
+    public String getProductNameUA() {
+        return productNameUA;
     }
 
-    public void setNameOfProductUA(String nameOfProductUA) {
-        this.nameOfProductUA = nameOfProductUA;
+    public void setProductNameUA(String nameOfProductUA) {
+        this.productNameUA = nameOfProductUA;
     }
 
-    public String getNameOfProductEN() {
-        return nameOfProductEN;
+    public String getProductNameEN() {
+        return productNameEN;
     }
 
-    public void setNameOfProductEN(String nameOfProductEN) {
-        this.nameOfProductEN = nameOfProductEN;
+    public void setProductNameEN(String nameOfProductEN) {
+        this.productNameEN = nameOfProductEN;
     }
 
-    public String getNameOfSupplier() {
-        return nameOfSupplier;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setNameOfSupplier(String nameOfSupplier) {
-        this.nameOfSupplier = nameOfSupplier;
+    public void setSupplierName(String nameOfSupplier) {
+        this.supplierName = nameOfSupplier;
     }
 
     @Override
     public String toString() {
         return "Article{" +
                 "id='" + id + '\'' +
-                ", nameOfProductUA='" + nameOfProductUA + '\'' +
-                ", nameOfProductEN='" + nameOfProductEN + '\'' +
-                ", nameOfSupplier='" + nameOfSupplier + '\'' +
+                ", productNameUA='" + productNameUA + '\'' +
+                ", productNameEN='" + productNameEN + '\'' +
+                ", supplierName='" + supplierName + '\'' +
                 '}';
     }
 }
