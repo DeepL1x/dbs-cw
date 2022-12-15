@@ -13,10 +13,7 @@ public class Article {
             strategy = "com.cavemen.dbscw.entities.article.ArticleIdGenerator"
     )
     @GeneratedValue(generator = "article_id")
-    @Column(
-            name = "article_id",
-            length = 8
-    )
+    @Column(length = 8)
     private String id;
     @Column(name = "ua_product_name")
     private String productNameUA;
@@ -26,14 +23,22 @@ public class Article {
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private ReadyItem readyItem;
+
+    public Article() {
+
+    }
+
     public Article(String nameOfProductUA, String nameOfProductEN, String nameOfSupplier) {
         this.productNameUA = nameOfProductUA;
         this.productNameEN = nameOfProductEN;
         this.supplierName = nameOfSupplier;
     }
 
-    public Article() {
-
+    public Article(String id, String nameOfProductUA, String nameOfProductEN, String nameOfSupplier) {
+        this.id = id;
+        this.productNameUA = nameOfProductUA;
+        this.productNameEN = nameOfProductEN;
+        this.supplierName = nameOfSupplier;
     }
 
     public String getId() {

@@ -1,30 +1,55 @@
 package com.cavemen.dbscw.entities.article;
 
+import com.cavemen.dbscw.entities.readyItem.ReadyItem;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/article")
 public class ArticleController {
+    private final ArticleService articleService;
 
-    private final ArticleRepository articleRepository;
-
-    public ArticleController(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
+    @Autowired
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
     }
 
-    @GetMapping("/")
-    public List<Article> getArticles(){
-        return articleRepository.findAll();
+    @GetMapping("/all")
+    public ResponseEntity<List<Article>> getArticles(){
+        return new ResponseEntity<>(articleService.getArticles(), HttpStatus.OK);
     }
-    @PostMapping("{temp}")
-    public void addArticle(@PathVariable("temp") String temp){
-        articleRepository.save(
-                new Article(
-                "лопата" + temp,
-                "shovel",
-                "UkrSpecSystems"
-                )
-        );
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<Optional<Article>> getArticleId(@PathVariable("id") String id){
+        return new ResponseEntity<>(articleService.getArticleById(id), HttpStatus.OK);
+    }
+
+    @PostMapping(
+            value = "/add",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public ResponseEntity<Article> addArticle(@RequestBody Article article){
+        return new ResponseEntity<>(articleService.addArticle(article), HttpStatus.OK);
+    }
+
+    @PutMapping(
+            value = "/update",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public ResponseEntity<Article> updateArticle(@RequestBody Article article){
+        return new ResponseEntity<>(articleService.updateArticle(article), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteArticle(@PathVariable("id") String id){
+        articleService.deleteArticle(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -8,7 +8,6 @@ import org.hibernate.annotations.Formula;
 @Table(name = "ready_item")
 public class ReadyItem {
     @Id
-    @Column (name = "ready_item_id")
     private String id;
     private Long totalItemAmount;
     private Long reservedItemAmount;
@@ -19,20 +18,34 @@ public class ReadyItem {
     private String measureUnit;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "ready_item_id")
     private Article article;
 
     public ReadyItem() {
     }
 
-    public ReadyItem(Article id, Long totalItemAmount, Long reservedItemAmount, Long availableItemAmount, String storagePlace, Double price, String unitOfMeasure) {
-        this.id = id.getId();
+    public ReadyItem(Long totalItemAmount, Long reservedItemAmount, String storagePlace, Double price, String unitOfMeasure) {
         this.totalItemAmount = totalItemAmount;
         this.reservedItemAmount = reservedItemAmount;
-        this.availableItemAmount = availableItemAmount;
         this.storagePlace = storagePlace;
         this.price = price;
         this.measureUnit = unitOfMeasure;
+    }
+
+    public ReadyItem(String id, Long totalItemAmount, Long reservedItemAmount, String storagePlace, Double price, String unitOfMeasure) {
+        this.id = id;
+        this.totalItemAmount = totalItemAmount;
+        this.reservedItemAmount = reservedItemAmount;
+        this.storagePlace = storagePlace;
+        this.price = price;
+        this.measureUnit = unitOfMeasure;
+    }
+
+//    public Article getArticle() {
+//        return article;
+//    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public String getId() {
