@@ -9,10 +9,14 @@ spring:
       password: mongo
       port: 27017
       authentication-database: admin
+    neo4j:
+      database: neo4j
+
   datasource:
     url: jdbc:mysql://localhost:3306/warehouse
     username: root
     password: 12345
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,3 +29,8 @@ spring:
   main:
     web-application-type: servlet
 
+  neo4j:
+    authentication:
+      username: neo4j
+      password: letmein
+    uri: neo4j://localhost:7687
