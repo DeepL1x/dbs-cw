@@ -19,21 +19,21 @@ public class ReadyItemService {
         this.articleRepository = articleRepository;
     }
 
-    public List<ReadyItem> getReadyItems(){
+    public List<com.cavemen.dbscw.entities.readyItem.ReadyItem> getReadyItems(){
         return readyItemRepository.findAll();
     }
 
-    public ReadyItem addReadyItem(ReadyItem readyItem){
+    public com.cavemen.dbscw.entities.readyItem.ReadyItem addReadyItem(com.cavemen.dbscw.entities.readyItem.ReadyItem readyItem){
         Optional<Article> article = articleRepository.findById(readyItem.getId());
         readyItem.setArticle(article.get());
         return readyItemRepository.save(readyItem);
     }
 
-    public Optional<ReadyItem> getReadyItemById(String id){
+    public Optional<com.cavemen.dbscw.entities.readyItem.ReadyItem> getReadyItemById(String id){
         return readyItemRepository.findById(id);
     }
 
-    public ReadyItem updateReadyItem(ReadyItem readyItem){
+    public com.cavemen.dbscw.entities.readyItem.ReadyItem updateReadyItem(com.cavemen.dbscw.entities.readyItem.ReadyItem readyItem){
         return readyItemRepository.save(readyItem);
     }
 

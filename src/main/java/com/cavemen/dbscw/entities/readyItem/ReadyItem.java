@@ -52,8 +52,8 @@ public class ReadyItem {
         return id;
     }
 
-    public void setId(Article id) {
-        this.id = id.getId();
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Long getTotalItemAmount() {

@@ -2,13 +2,20 @@ server:
   port: 8080
 
 spring:
+  data:
+    mongodb:
+      database: mongodb
+      username: mongo
+      password: mongo
+      port: 27017
+      authentication-database: admin
   datasource:
     url: jdbc:mysql://localhost:3306/warehouse
     username: root
-    password: My1stD8@
+    password: 12345
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect

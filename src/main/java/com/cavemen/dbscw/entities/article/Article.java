@@ -1,6 +1,5 @@
 package com.cavemen.dbscw.entities.article;
 
-import com.cavemen.dbscw.entities.readyItem.ReadyItem;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,7 +21,7 @@ public class Article {
     private String supplierName;
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private ReadyItem readyItem;
+    private com.cavemen.dbscw.entities.readyItem.ReadyItem readyItem;
 
     public Article() {
 
