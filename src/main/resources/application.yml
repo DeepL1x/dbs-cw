@@ -5,8 +5,8 @@ spring:
   data:
     mongodb:
       database: mongodb
-      username: mongo
-      password: mongo
+#      username: mongo
+#      password: mongo
       port: 27017
       authentication-database: admin
     neo4j:
@@ -15,11 +15,11 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/warehouse
     username: root
-    password: 12345
+    password: letmein
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
@@ -33,4 +33,4 @@ spring:
     authentication:
       username: neo4j
       password: letmein
-    uri: neo4j://localhost:7687
+    uri: neo4j://localhost:9090
