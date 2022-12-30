@@ -2,7 +2,6 @@ package com.cavemen.dbscw.entities.userForAuthorizationService;
 
 import com.cavemen.dbscw.exception.CustomException;
 import com.cavemen.dbscw.exception.ErrorCode;
-import jakarta.persistence.EntityNotFoundException;
 
 public class UserForAuthorizationService {
 
@@ -13,14 +12,15 @@ public class UserForAuthorizationService {
   }
 
   public UserForAuthorization validation(UserForAuthorization userForAuthorization) {
-    try {
-      userForAuthorizationRepository.findById(userForAuthorization.getId());
+      if(!userForAuthorizationRepository.existsById(userForAuthorization.getId()))
+        throw new CustomException(ErrorCode.Invalid_User_Login_Or_Password);
+      if(!userForAuthorizationRepository.findById(userForAuthorization.getId())
+          .get().getPassword().
+          equals(userForAuthorization.getPassword()))
+        throw new CustomException(ErrorCode.Invalid_User_Login_Or_Password);
       //TODO звідси починати конект з Neo4j
       return userForAuthorization;
       //Цей ретурн видалити і повертати нашого юзера з даними
-    }
-    catch (EntityNotFoundException e) {
-      throw new CustomException(ErrorCode.Invalid_User_Login_Or_Password);
-    }
+
   }
 }
