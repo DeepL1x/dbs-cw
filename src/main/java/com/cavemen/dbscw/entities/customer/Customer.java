@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Node("Customer")
@@ -75,5 +76,18 @@ public class Customer {
 
     public void addCategory(Category category) {
         categorySet.add(category);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id.equals(customer.id) && Objects.equals(login, customer.login) && Objects.equals(name, customer.name) && Objects.equals(country, customer.country) && Objects.equals(categorySet, customer.categorySet);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

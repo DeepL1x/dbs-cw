@@ -28,9 +28,9 @@ public class UserForAuthorizationController {
   }
 
   @PostMapping(
-      value = "/addUsersForAuth",
-      consumes = "application/json",
-      produces = "application/json"
+      value = "/addUsersForAuth"
+//      consumes = "application/json",
+//      produces = "application/json"
   )
   public void addUsersForAuth() {
     UserForAuthorization user1 = new UserForAuthorization("login1","password1");

@@ -1,6 +1,7 @@
 package com.cavemen.dbscw.entities.provider;
 
-import com.cavemen.dbscw.entities.provider.Provider;
+import com.cavemen.dbscw.entities.category.Category;
+import com.cavemen.dbscw.entities.category.CategoryController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,10 @@ import java.util.Optional;
 @RequestMapping("/providers")
 public class ProviderController {
     private final ProviderService providerService;
-
-    public ProviderController(ProviderService providerService) {
+    private final CategoryController categoryController;
+    public ProviderController(ProviderService providerService, CategoryController categoryController) {
         this.providerService = providerService;
+        this.categoryController = categoryController;
     }
 
     @GetMapping("/all")
@@ -38,6 +40,9 @@ public class ProviderController {
 
     @PostMapping("/connect/{prov_id}/{cat_id}")
     public void connectToCategory(@PathVariable("prov_id") Long providerID, @PathVariable("cat_id") Long categoryID) {
+        ResponseEntity<Optional<Provider>> provider = getProvider(providerID);
+        ResponseEntity<Optional<Category>> category = categoryController.getCategory(categoryID);
+        provider.getBody().get().addCategory(category.getBody().get());
         providerService.connect(providerID, categoryID);
     }
 

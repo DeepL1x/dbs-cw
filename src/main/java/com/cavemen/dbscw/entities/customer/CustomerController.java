@@ -1,5 +1,7 @@
 package com.cavemen.dbscw.entities.customer;
 
+import com.cavemen.dbscw.entities.category.Category;
+import com.cavemen.dbscw.entities.category.CategoryController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +13,11 @@ import java.util.Optional;
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
+    private final CategoryController categoryController;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, CategoryController categoryController) {
         this.customerService = customerService;
+        this.categoryController = categoryController;
     }
 
     @GetMapping("/all")
@@ -37,15 +41,9 @@ public class CustomerController {
 
     @PostMapping("/connect/{cust_id}/{cat_id}")
     public void connectToCategory(@PathVariable("cust_id") Long customerID, @PathVariable("cat_id") Long categoryID) {
-//        Customer customer = getCustomer(customerID).getBody().get();
-//        assert customer != null;
-//        customer.addCategory(categoryID);
-        /*ResponseEntity res = getCustomer(customerID);
-        if (res.hasBody()) {
-            Customer customer = (Customer) res.getBody();
-            assert customer != null;
-            customer.addCategory(categoryID);
-        }*/
+        ResponseEntity<Optional<Customer>> customer = getCustomer(customerID);
+        ResponseEntity<Optional<Category>> category = categoryController.getCategory(categoryID);
+        customer.getBody().get().addCategory(category.getBody().get());
         customerService.connect(customerID, categoryID);
     }
 

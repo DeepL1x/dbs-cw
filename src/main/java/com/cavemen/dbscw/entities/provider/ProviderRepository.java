@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProviderRepository extends Neo4jRepository<Provider, Long> {
     @Query("OPTIONAL MATCH(p:Provider), (cat:Category) " +
-            "WHERE id(p) = $customerID AND id(cat) = $categoryID " +
+            "WHERE id(p) = $providerID AND id(cat) = $categoryID " +
             "CREATE (p)-[r:PROVIDE]->(cat)")
     void connect(@Param("providerID") Long providerID, @Param("categoryID") Long categoryID);
 }
