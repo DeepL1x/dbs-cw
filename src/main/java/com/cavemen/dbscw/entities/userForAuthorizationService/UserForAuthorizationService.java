@@ -2,7 +2,9 @@ package com.cavemen.dbscw.entities.userForAuthorizationService;
 
 import com.cavemen.dbscw.exception.CustomException;
 import com.cavemen.dbscw.exception.ErrorCode;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserForAuthorizationService {
 
   private final UserForAuthorizationRepository userForAuthorizationRepository;
