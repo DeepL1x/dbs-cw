@@ -16,6 +16,9 @@ export class ReadyItemService {
   public getReadyItem(): Observable<ReadyItem[]>{
     return this.http.get<ReadyItem[]>(`${this.apiServerUrl}/readyItem/all`);
   }
+  public getReadyItemDescByPrice(): Observable<ReadyItem[]>{
+    return this.http.get<ReadyItem[]>(`${this.apiServerUrl}/readyItem/all/descByPrice`);
+  }
   public addReadyItem(readyItem: ReadyItem): Observable<ReadyItem>{
     return this.http.post<ReadyItem>(`${this.apiServerUrl}/readyItem/add`, readyItem);
   }

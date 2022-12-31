@@ -3,6 +3,7 @@ package com.cavemen.dbscw.entities.readyItem;
 import com.cavemen.dbscw.entities.article.Article;
 import com.cavemen.dbscw.entities.article.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +20,25 @@ public class ReadyItemService {
         this.articleRepository = articleRepository;
     }
 
-    public List<com.cavemen.dbscw.entities.readyItem.ReadyItem> getReadyItems(){
+    public List<ReadyItem> getReadyItems(){
         return readyItemRepository.findAll();
     }
 
-    public com.cavemen.dbscw.entities.readyItem.ReadyItem addReadyItem(com.cavemen.dbscw.entities.readyItem.ReadyItem readyItem){
+    public List<ReadyItem> getReadyItemsDescByPrice(){
+        return readyItemRepository.findAll(Sort.by(Sort.Direction.DESC, "price"));
+    }
+
+    public ReadyItem addReadyItem(ReadyItem readyItem){
         Optional<Article> article = articleRepository.findById(readyItem.getId());
         readyItem.setArticle(article.get());
         return readyItemRepository.save(readyItem);
     }
 
-    public Optional<com.cavemen.dbscw.entities.readyItem.ReadyItem> getReadyItemById(String id){
+    public Optional<ReadyItem> getReadyItemById(String id){
         return readyItemRepository.findById(id);
     }
 
-    public com.cavemen.dbscw.entities.readyItem.ReadyItem updateReadyItem(com.cavemen.dbscw.entities.readyItem.ReadyItem readyItem){
+    public ReadyItem updateReadyItem(ReadyItem readyItem){
         return readyItemRepository.save(readyItem);
     }
 

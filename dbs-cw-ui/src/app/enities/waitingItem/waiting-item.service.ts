@@ -17,6 +17,11 @@ export class WaitingItemService {
   public getWaitingItem(): Observable<WaitingItem[]>{
     return this.http.get<WaitingItem[]>(`${this.apiServerUrl}/waitingItem/all`);
   }
+
+  public getWaitingItemDescByPrice(): Observable<WaitingItem[]>{
+    return this.http.get<WaitingItem[]>(`${this.apiServerUrl}/waitingItem/all/descByPrice`);
+  }
+
   public addWaitingItem(waitingItem: WaitingItem): Observable<WaitingItem>{
     return this.http.post<WaitingItem>(`${this.apiServerUrl}/waitingItem/add`, waitingItem);
   }

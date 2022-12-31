@@ -1,5 +1,6 @@
 package com.cavemen.dbscw.entities.waitingItem;
 
+import com.cavemen.dbscw.entities.readyItem.ReadyItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,11 @@ public class WaitingItemController {
     @GetMapping("/all")
     public ResponseEntity<List<WaitingItem>> getWaitingItems(){
         return new ResponseEntity<>(waitingItemService.getItems(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all/descByPrice")
+    public  ResponseEntity<List<WaitingItem>> getItemsDescByPrice(){
+        return new ResponseEntity<>(waitingItemService.getItemsDescByPrice(), HttpStatus.OK);
     }
 
     @GetMapping("/getById/{id}")

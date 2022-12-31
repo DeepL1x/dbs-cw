@@ -3,6 +3,7 @@ package com.cavemen.dbscw.entities.waitingItem;
 import com.cavemen.dbscw.entities.article.Article;
 import com.cavemen.dbscw.entities.article.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,10 @@ public class WaitingItemService {
 
     public List<WaitingItem> getItems(){
         return waitingItemRepository.findAll();
+    }
+
+    public List<WaitingItem> getItemsDescByPrice(){
+        return waitingItemRepository.findAll(Sort.by(Sort.Direction.DESC, "price"));
     }
 
     public WaitingItem addItem(WaitingItem waitingItem){
