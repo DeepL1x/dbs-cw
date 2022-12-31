@@ -1,6 +1,7 @@
 package com.cavemen.dbscw.entities.userForAuthorizationService;
 
 import com.cavemen.dbscw.entities.readyItem.ReadyItem;
+import com.cavemen.dbscw.entities.worker.Worker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class UserForAuthorizationController {
       consumes = "application/json",
       produces = "application/json"
   )
-  public ResponseEntity<UserForAuthorization> authorization(@RequestBody String login,@RequestBody String password){
+  public ResponseEntity<Worker> authorization(@RequestBody String login, @RequestBody String password){
     UserForAuthorization userForAuthorization = new UserForAuthorization(login, password);
     return new ResponseEntity<>(userForAuthorizationService.validation(userForAuthorization),HttpStatus.OK);
   }

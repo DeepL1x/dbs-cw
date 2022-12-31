@@ -12,5 +12,5 @@ public interface CustomerRepository extends Neo4jRepository<Customer, Long> {
     @Query("OPTIONAL MATCH(c:Customer), (cat:Category) " +
             "WHERE id(c) = $customerID AND id(cat) = $categoryID " +
             "CREATE (c)-[r:PREFERS]->(cat)")
-    void connect(@Param("customer") Long customerID, @Param("category") Long categoryID);
+    void connect(@Param("customerID") Long customerID, @Param("categoryID") Long categoryID);
 }
