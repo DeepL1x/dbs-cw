@@ -1,68 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="styles.scss">
+  <meta charset="utf-8">
+  <title>DbsCwUi</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-<div class="table-container">
-  <table id="article-table" border="1">
-    <tr>
-      <td>
-        Article
-      </td>
-      <td>
-        Назва
-      </td>
-      <td>
-        Name
-      </td>
-      <td>
-        Постачальник
-      </td>
-    </tr>
-    <tr>
-      <td>
-        !content!
-      </td>
-    </tr>
-  </table>
-  <table id="ready-item-table" border="1">
-    <tr>
-      <td>id</td>
-      <td class="hidden-item">Total item amount</td>
-      <td class="hidden-item">Reserved item amount</td>
-      <td>Avaliable item amount</td>
-      <td>Storage place</td>
-      <td>Measure unit</td>
-    </tr>
-  </table>
-  <table id="waiting-item-table" border="1">
-    <tr>
-      <td>id</td>
-      <td>Total item amount</td>
-      <td>Price</td>
-      <td>Measure unit</td>
-    </tr>
-  </table>
-</div>
-<div class="btn-container">
-  <button onclick="PopUp()">
-    Add
-  </button>
-  <button onclick="PopUp()">Edit</button>
-  <button onclick="PopUp()">Delete</button>
-</div>
-<div class="black-screen black-screen-hidden"></div>
-<div class="pop-up-container pop-up-container-hidden">
-  <form action="" id="pop-up-form">
-
-  </form>
-</div>
+  <app-root></app-root>
 </body>
-<script type="text/javascript" src="script.js"></script>
 </html>

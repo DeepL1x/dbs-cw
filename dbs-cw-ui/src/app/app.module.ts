@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import {ArticleService} from "./enities/article/article.service";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -13,7 +12,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     BrowserModule,
     HttpClientModule
   ],
-  providers: [ArticleService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
