@@ -23,4 +23,8 @@ public class UserForAuthorizationService {
       //Цей ретурн видалити і повертати нашого юзера з даними
 
   }
+
+  public void save(UserForAuthorization user) {
+    userForAuthorizationRepository.save(user);
+  }
 }
