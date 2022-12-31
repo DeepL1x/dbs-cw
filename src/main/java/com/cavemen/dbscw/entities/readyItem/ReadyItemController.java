@@ -23,6 +23,11 @@ public class ReadyItemController {
         return new ResponseEntity<>(readyItemService.getReadyItems(), HttpStatus.OK);
     }
 
+    @GetMapping("/all/descByPrice")
+    public  ResponseEntity<List<ReadyItem>> getItemsDescByPrice(){
+        return new ResponseEntity<>(readyItemService.getReadyItemsDescByPrice(), HttpStatus.OK);
+    }
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<Optional<ReadyItem>> getItemById(@PathVariable("id") String id){
         return new ResponseEntity<>(readyItemService.getReadyItemById(id), HttpStatus.OK);

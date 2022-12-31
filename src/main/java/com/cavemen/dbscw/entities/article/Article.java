@@ -3,6 +3,7 @@ package com.cavemen.dbscw.entities.article;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.sql.Date;
 @Entity
 @Table(name = "article")
 public class Article {
@@ -19,6 +20,10 @@ public class Article {
     @Column(name = "en_product_name")
     private String productNameEN;
     private String supplierName;
+    @Temporal(TemporalType.DATE)
+    private Date expirationTerm;
+    @Transient
+    private boolean disposalNeeded;
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private com.cavemen.dbscw.entities.readyItem.ReadyItem readyItem;
@@ -27,17 +32,34 @@ public class Article {
 
     }
 
-    public Article(String nameOfProductUA, String nameOfProductEN, String nameOfSupplier) {
+    public Article(String nameOfProductUA, String nameOfProductEN, String nameOfSupplier, Date expirationTerm) {
         this.productNameUA = nameOfProductUA;
         this.productNameEN = nameOfProductEN;
         this.supplierName = nameOfSupplier;
+        this.expirationTerm = expirationTerm;
+        validateExpTerm();
     }
 
-    public Article(String id, String nameOfProductUA, String nameOfProductEN, String nameOfSupplier) {
+    public Article(String id, String nameOfProductUA, String nameOfProductEN, String nameOfSupplier, Date expirationTerm) {
         this.id = id;
         this.productNameUA = nameOfProductUA;
         this.productNameEN = nameOfProductEN;
         this.supplierName = nameOfSupplier;
+        this.expirationTerm = expirationTerm;
+        validateExpTerm();
+    }
+
+    public boolean isDisposalNeeded() {
+        return disposalNeeded;
+    }
+
+    public Date getExpirationTerm() {
+        return expirationTerm;
+    }
+
+    public void setExpirationTerm(java.sql.Date expirationTerm) {
+        this.expirationTerm = expirationTerm;
+        validateExpTerm();
     }
 
     public String getId() {
@@ -70,6 +92,13 @@ public class Article {
 
     public void setSupplierName(String nameOfSupplier) {
         this.supplierName = nameOfSupplier;
+    }
+
+    @PostLoad
+    public void validateExpTerm(){
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date currentDate = new java.sql.Date(utilDate.getTime());
+        this.disposalNeeded = currentDate.after(this.expirationTerm);
     }
 
     @Override

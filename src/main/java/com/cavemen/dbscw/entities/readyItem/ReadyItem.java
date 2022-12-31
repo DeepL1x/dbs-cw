@@ -40,9 +40,9 @@ public class ReadyItem {
         this.measureUnit = unitOfMeasure;
     }
 
-//    public Article getArticle() {
-//        return article;
-//    }
+    public Article getArticle() {
+        return article;
+    }
 
     public void setArticle(Article article) {
         this.article = article;
