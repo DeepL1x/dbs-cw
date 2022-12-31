@@ -1,1 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
+
+.table-container, .btn-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.table-container {
+  width: 100%;
+}
+.btn-container {
+  margin: 100px auto 0 auto;
+  width: 30%;
+}
+table {
+  height: 200px;
+}
+.black-screen {
+  width: 100%;
+  height: 100vh;
+  opacity: 0.6;
+  background: black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+}
+.black-screen-hidden {
+  display: none;
+}
+.pop-up-container {
+  position: absolute;
+  top: 25vh;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  height: 500px;
+  border: 2px solid black;
+  background: #484848;
+  z-index: 2;
+  display: flex;
+}
+.pop-up-container-hidden {
+  display: none;
+}
+.hidden-item {
+  display: none;
+}
