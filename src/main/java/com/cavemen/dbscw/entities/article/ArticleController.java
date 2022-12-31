@@ -1,5 +1,7 @@
 package com.cavemen.dbscw.entities.article;
 
+import com.cavemen.dbscw.entities.userForAuthorizationService.UserForAuthorization;
+import com.cavemen.dbscw.entities.userForAuthorizationService.UserForAuthorizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +14,18 @@ import java.util.Optional;
 @RequestMapping("/article")
 public class ArticleController {
     private final ArticleService articleService;
+    private final UserForAuthorizationRepository userForAuthorizationRepository;
 
     @Autowired
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, UserForAuthorizationRepository userForAuthorizationRepository) {
         this.articleService = articleService;
+        this.userForAuthorizationRepository = userForAuthorizationRepository;
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Article>> getArticles(){
+//        userForAuthorizationRepository.save(new UserForAuthorization("3","password"));
+//        System.out.println(userForAuthorizationRepository.findById("3").get().getPassword());
         return new ResponseEntity<>(articleService.getArticles(), HttpStatus.OK);
     }
 
