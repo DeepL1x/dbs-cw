@@ -4,7 +4,10 @@ import com.cavemen.dbscw.entities.worker.Worker;
 import com.cavemen.dbscw.entities.worker.WorkerService;
 import com.cavemen.dbscw.exception.CustomException;
 import com.cavemen.dbscw.exception.ErrorCode;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserForAuthorizationService {
@@ -29,5 +32,9 @@ public class UserForAuthorizationService {
 
   public void save(UserForAuthorization user) {
     userForAuthorizationRepository.save(user);
+  }
+
+  public List<UserForAuthorization> getUsers() {
+    return Streamable.of(userForAuthorizationRepository.findAll()).toList();
   }
 }
