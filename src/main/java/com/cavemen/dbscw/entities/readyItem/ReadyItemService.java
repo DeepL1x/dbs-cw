@@ -29,6 +29,7 @@ public class ReadyItemService {
     }
 
     public ReadyItem addReadyItem(ReadyItem readyItem){
+        System.out.println(readyItem);
         Optional<Article> article = articleRepository.findById(readyItem.getId());
         readyItem.setArticle(article.get());
         return readyItemRepository.save(readyItem);
@@ -43,6 +44,7 @@ public class ReadyItemService {
     }
 
     public void deleteReadyItem(String id){
+        System.out.println(id);
         readyItemRepository.deleteById(id);
     }
 }

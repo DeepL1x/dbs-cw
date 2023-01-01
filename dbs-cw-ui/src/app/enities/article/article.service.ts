@@ -22,7 +22,7 @@ export class ArticleService {
   public updateArticle(article: Article): Observable<Article>{
     return this.http.put<Article>(`${this.apiServerUrl}/article/update`, article);
   }
-  public deleteArticle(articleId: number): Observable<void> {
+  public deleteArticle(articleId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/article/delete/${articleId}`)
   }
 }

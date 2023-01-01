@@ -14,7 +14,7 @@ export class WaitingItemService {
 
   constructor(private http: HttpClient) { }
 
-  public getWaitingItem(): Observable<WaitingItem[]>{
+  public getWaitingItems(): Observable<WaitingItem[]>{
     return this.http.get<WaitingItem[]>(`${this.apiServerUrl}/waitingItem/all`);
   }
 
@@ -28,7 +28,7 @@ export class WaitingItemService {
   public updateWaitingItem(waitingItem: WaitingItem): Observable<WaitingItem>{
     return this.http.put<WaitingItem>(`${this.apiServerUrl}/waitingItem/update`, waitingItem);
   }
-  public deleteWaitingItem(id: number): Observable<void>{
+  public deleteWaitingItem(id: string): Observable<void>{
     return this.http.delete<void>(`${this.apiServerUrl}/waitingItem/delete/${id}`);
   }
 }

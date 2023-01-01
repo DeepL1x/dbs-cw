@@ -39,6 +39,7 @@ public class ReadyItemController {
             produces = "application/json"
     )
     public ResponseEntity<ReadyItem> addItem(@RequestBody ReadyItem readyItem) {
+        System.out.println(readyItem);
         return new ResponseEntity<>(readyItemService.addReadyItem(readyItem), HttpStatus.OK);
     }
 
@@ -53,6 +54,7 @@ public class ReadyItemController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteItem(@PathVariable("id") String id){
+        System.out.println("delete" + id);
         readyItemService.deleteReadyItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

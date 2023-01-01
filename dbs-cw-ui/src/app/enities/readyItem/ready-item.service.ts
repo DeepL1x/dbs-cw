@@ -13,7 +13,7 @@ export class ReadyItemService {
 
   constructor(private http: HttpClient) { }
 
-  public getReadyItem(): Observable<ReadyItem[]>{
+  public getReadyItems(): Observable<ReadyItem[]>{
     return this.http.get<ReadyItem[]>(`${this.apiServerUrl}/readyItem/all`);
   }
   public getReadyItemDescByPrice(): Observable<ReadyItem[]>{
@@ -25,7 +25,7 @@ export class ReadyItemService {
   public updateReadyItem(readyItem: ReadyItem): Observable<ReadyItem>{
     return this.http.put<ReadyItem>(`${this.apiServerUrl}/readyItem/update`, readyItem);
   }
-  public deleteReadyItem(id: number): Observable<void>{
+  public deleteReadyItem(id: string): Observable<void>{
     return this.http.delete<void>(`${this.apiServerUrl}/readyItem/delete/${id}`);
   }
 }

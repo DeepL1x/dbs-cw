@@ -9,75 +9,123 @@
   <link rel="stylesheet" href="app.component.scss">
 </head>
 <body>
-<div class="table-container">
-  <table id="article-table" border="1">
-    <tr>
-      <td>
-        Article
-      </td>
-      <td>
-        Назва
-      </td>
-      <td>
-        Name
-      </td>
-      <td>
-        Постачальник
-      </td>
-    </tr>
-    <tr *ngFor="let article of articles">
-      <td>
-        {{article?.id}}
-      </td>
-      <td>
-        {{article?.productNameUA}}
-      </td>
-      <td>
-        {{article?.productNameEN}}
-      </td>
-      <td>
-        {{article?.supplierName}}
-      </td>
-      <td>
-        {{article?.expirationTerm}}
-      </td>
-      <td>
-        {{article?.disposalNeeded}}
-      </td>
-    </tr>
-  </table>
-  <table id="ready-item-table" border="1">
-    <tr>
-      <td>id</td>
-      <td class="hidden-item">Total item amount</td>
-      <td class="hidden-item">Reserved item amount</td>
-      <td>Avaliable item amount</td>
-      <td>Storage place</td>
-      <td>Measure unit</td>
-    </tr>
-  </table>
-  <table id="waiting-item-table" border="1">
-    <tr>
-      <td>id</td>
-      <td>Total item amount</td>
-      <td>Price</td>
-      <td>Measure unit</td>
-    </tr>
-  </table>
+<div class="tab-section">
+  <div class="tabs-container">
+    <ul class="tabs-buttons">
+      <li id="articles" (click) = "tabFill('articles')">Article</li>
+      <li id="readyItems" (click) = "tabFill('readyItems')">ReadyItem</li>
+      <li id="waitingItems" (click) = "tabFill('waitingItems')">WaitingItem</li>
+      <li id="invoices" (click)="tabFill('invoices')">Invoice</li>
+      <li id="orders" (click)="tabFill('orders')">Order</li>
+    </ul>
+    <div class="btn-container">
+      <button id="add" class="control-button" (click)="PopUp('add')">Add</button>
+      <button id="edit" class="control-button" (click)="PopUp('edit')">Edit</button>
+      <button id="delete" class="control-button" (click)="PopUp('delete')">Delete</button>
+      <button id="order" class="control-button" (click)="PopUp('order')">Order</button>
+    </div>
+    <div class="tabs-content">
+      <div class="tab">
+        <div class="table-container">
+          <table border="1">
+            <tr class="headers"></tr>
+            <table border="1"></table>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="btn-container">
-  <button onclick="PopUp()">
-    Add
-  </button>
-  <button onclick="PopUp()">Edit</button>
-  <button onclick="PopUp()">Delete</button>
-</div>
+
 <div class="black-screen black-screen-hidden"></div>
 <div class="pop-up-container pop-up-container-hidden">
-  <form action="" id="pop-up-form">
+  <form #articleForm="ngForm" (ngSubmit)="onSubmit(articleForm)" id="add_article_form">
+    <label for="article_id">id</label>
+    <input ngModel type="text" id="article_id" name="id">
 
+    <label for="article_productNameUA">productNameUA</label>
+    <input ngModel type="text" id="article_productNameUA" name="productNameUA" required>
+
+    <label for="article_productNameEN">productNameEN</label>
+    <input ngModel type="text" id="article_productNameEN" name="productNameEN" required>
+
+    <label for="article_supplierName">supplierName</label>
+    <input ngModel type="text" id="article_supplierName" name="supplierName" required>
+
+    <label for="article_expirationTerm">expirationTerm</label>
+    <input ngModel type="text" id="article_expirationTerm" name="expirationTerm" required>
+
+    <label for="article_disposalNeeded">disposalNeeded</label>
+    <input ngModel type="text" id="article_disposalNeeded" name="disposalNeeded" required>
+
+    <button type="submit" [disabled]="articleForm.invalid">OK</button>
+  </form>
+
+  <form #readyItemForm="ngForm" (ngSubmit)="onSubmit(readyItemForm)" id="add_readyitem_form">
+    <label for="ready_item_id">id</label>
+    <input ngModel type="text" id="ready_item_id" name="id">
+
+    <label for="ready_item_totalItemAmount">totalItemAmount</label>
+    <input ngModel type="text" id="ready_item_totalItemAmount" name="totalItemAmount" required>
+
+    <label for="ready_item_reservedItemAmount">reservedItemAmount</label>
+    <input ngModel type="text" id="ready_item_reservedItemAmount" name="reservedItemAmount" required>
+
+    <label for="ready_item_availableItemAmount">availableItemAmount</label>
+    <input ngModel type="text" id="ready_item_availableItemAmount" name="availableItemAmount" required>
+
+    <label for="ready_item_storagePlace">storagePlace</label>
+    <input ngModel type="text" id="ready_item_storagePlace" name="storagePlace" required>
+
+    <label for="ready_item_price">price</label>
+    <input ngModel type="text" id="ready_item_price" name="price" required>
+
+    <label for="ready_item_measureUnit">measureUnit</label>
+    <input ngModel type="text" id="ready_item_measureUnit" name="measureUnit" required>
+
+    <button type="submit" [disabled]="readyItemForm.invalid">OK</button>
+  </form>
+
+  <form #waitingItemForm="ngForm" (ngSubmit)="onSubmit(waitingItemForm)" id="add_waitingitem_form">
+    <label for="waiting_item_id">id</label>
+    <input ngModel type="text" id="waiting_item_id" name="id">
+
+    <label for="waiting_item_totalItemAmount">totalItemAmount</label>
+    <input ngModel type="text" id="waiting_item_totalItemAmount" name="totalItemAmount" required>
+
+    <label for="waiting_item_price">price</label>
+    <input ngModel type="text" id="waiting_item_price" name="price" required>
+
+    <label for="waiting_item_measureUnit">measureUnit</label>
+    <input ngModel type="text" id="waiting_item_measureUnit" name="measureUnit" required>
+
+    <button type="submit" [disabled]="waitingItemForm.invalid">OK</button>
+  </form>
+
+  <form #orderForm="ngForm" (ngSubmit)="onSubmit(orderForm)" id="add_order_form">
+    <label for="order_address">order_address</label>
+    <input ngModel type="text" id="order_address" name="address" required>
+
+    <label for="order_wishlist">wishlist</label>
+    <div style="display: flex; justify-content: space-around; width: 100%">
+        <span>id</span>
+        <span>value</span>
+    </div>
+    <table ngModel id="order_wishlist" name="wishList" style="width: 100%" border="1">
+      <tr *ngFor="let wishItem of wishList">
+        <td>{{wishItem.id}}</td>
+        <td>{{wishItem.value}}</td>
+      </tr>
+    </table>
+    <button type="submit" [disabled]="orderForm.invalid">OK</button>
+  </form>
+
+  <form #deleteForm="ngForm" (ngSubmit)="onSubmit(deleteForm)" id="del_form">
+    <label for="del_form_id">id</label>
+    <input id="del_form_id" name="id" ngModel type="text">
+    <button type="submit" [disabled]="deleteForm.invalid">OK</button>
   </form>
 </div>
 </body>
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="../assets/js/script.js"></script>
 </html>

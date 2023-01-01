@@ -40,6 +40,7 @@ public class ArticleController {
             produces = "application/json"
     )
     public ResponseEntity<Article> addArticle(@RequestBody Article article){
+        System.out.println(article.toString());
         return new ResponseEntity<>(articleService.addArticle(article), HttpStatus.OK);
     }
 

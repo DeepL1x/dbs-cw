@@ -23,26 +23,26 @@ public class ReadyItem {
     public ReadyItem() {
     }
 
-    public ReadyItem(Long totalItemAmount, Long reservedItemAmount, String storagePlace, Double price, String unitOfMeasure) {
+    public ReadyItem(Long totalItemAmount, Long reservedItemAmount, String storagePlace, Double price, String measureUnit) {
         this.totalItemAmount = totalItemAmount;
         this.reservedItemAmount = reservedItemAmount;
         this.storagePlace = storagePlace;
         this.price = price;
-        this.measureUnit = unitOfMeasure;
+        this.measureUnit = measureUnit;
     }
 
-    public ReadyItem(String id, Long totalItemAmount, Long reservedItemAmount, String storagePlace, Double price, String unitOfMeasure) {
+    public ReadyItem(String id, Long totalItemAmount, Long reservedItemAmount, String storagePlace, Double price, String measureUnit) {
         this.id = id;
         this.totalItemAmount = totalItemAmount;
         this.reservedItemAmount = reservedItemAmount;
         this.storagePlace = storagePlace;
         this.price = price;
-        this.measureUnit = unitOfMeasure;
+        this.measureUnit = measureUnit;
     }
 
-    public Article getArticle() {
-        return article;
-    }
+//    public Article getArticle() {
+//        return article;
+//    }
 
     public void setArticle(Article article) {
         this.article = article;

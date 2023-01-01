@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class ArticleIdGenerator implements IdentifierGenerator {
     private static final int articleLength = 8;
+
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {
 
@@ -21,7 +22,7 @@ public class ArticleIdGenerator implements IdentifierGenerator {
 
         Supplier<Stream<String>> streamSupplier = () -> session.createQuery(query).stream();
         Stream<String> ids = streamSupplier.get();
-        if (ids.toArray().length == 0){
+        if (ids.toArray().length == 0) {
             return "0".repeat(8);
         }
         ids = streamSupplier.get();
@@ -30,7 +31,10 @@ public class ArticleIdGenerator implements IdentifierGenerator {
                 .max()
                 .orElse(0L);
         StringBuilder sb = new StringBuilder();
-        sb.append("0".repeat(Math.max(0, articleLength - max.toString().length())));
+        if (max == 9 || max == 99 || max == 999 || max == 9999 || max == 99999 || max == 999999 || max == 9999999  || max == 99999999)
+            sb.append("0".repeat(Math.max(0, articleLength - max.toString().length()) - 1));
+        else
+            sb.append("0".repeat(Math.max(0, articleLength - max.toString().length())));
         return sb.toString() + (max + 1);
     }
 }
