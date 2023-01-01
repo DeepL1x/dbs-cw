@@ -22,7 +22,7 @@ public class Customer {
 
     private String country;
 
-    @Relationship(type = "PREFER", direction = Relationship.Direction.OUTGOING)
+    @Relationship(type = "PREFERS", direction = Relationship.Direction.OUTGOING)
     private Set<Category> categorySet = new HashSet<>();
 
     public Long getId() {

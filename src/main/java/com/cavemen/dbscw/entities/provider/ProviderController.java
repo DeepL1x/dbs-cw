@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/providers")
@@ -27,6 +28,11 @@ public class ProviderController {
     @GetMapping("/getById/{id}")
     public ResponseEntity<Optional<Provider>> getProvider(@PathVariable("id") Long id){
         return new ResponseEntity<>(providerService.getProviderById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/getCategories/{prov_id}")
+    public ResponseEntity<Set<String>> getCategories(@PathVariable("prov_id") Long providerID) {
+        return new ResponseEntity<>(providerService.getCategories(providerID), HttpStatus.OK);
     }
 
     @PostMapping(

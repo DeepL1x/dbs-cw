@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/customers")
@@ -30,11 +31,16 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomerById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/getCategories/{cust_id}")
+    public ResponseEntity<Set<String>> getCategories(@PathVariable("cust_id") Long customerID) {
+        return new ResponseEntity<>(customerService.getCategories(customerID), HttpStatus.OK);
+    }
+
     @PostMapping(
-        value = "/add",
-        consumes = "application/json",
-        produces = "application/json"
-)
+            value = "/add",
+            consumes = "application/json",
+            produces = "application/json"
+    )
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
         return new ResponseEntity<>(customerService.addCustomer(customer), HttpStatus.OK);
     }

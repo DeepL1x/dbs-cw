@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProviderService {
@@ -38,5 +39,9 @@ public class ProviderService {
 
     public void connect(Long providerID, Long categoryID) {
         providerRepository.connect(providerID, categoryID);
+    }
+
+    public Set<String> getCategories(Long id) {
+        return providerRepository.getCategories(id);
     }
 }

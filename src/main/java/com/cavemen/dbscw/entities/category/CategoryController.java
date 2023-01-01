@@ -28,7 +28,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.getCategoryById(id), HttpStatus.OK);
     }
 
-    @PostMapping(
+    @PutMapping(
             value = "/add",
             consumes = "application/json",
             produces = "application/json"

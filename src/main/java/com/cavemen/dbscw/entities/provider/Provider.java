@@ -4,6 +4,7 @@ import com.cavemen.dbscw.entities.category.Category;
 import org.springframework.data.neo4j.core.schema.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Node("Provider")
@@ -59,5 +60,18 @@ public class Provider {
 
     public void addCategory(Category category) {
         categorySet.add(category);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Provider provider = (Provider) o;
+        return id.equals(provider.id) && Objects.equals(name, provider.name) && Objects.equals(country, provider.country) && Objects.equals(categorySet, provider.categorySet);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

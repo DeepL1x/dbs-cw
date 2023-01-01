@@ -1,10 +1,12 @@
 package com.cavemen.dbscw.entities.customer;
 
+import com.cavemen.dbscw.entities.category.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CustomerService {
@@ -33,6 +35,10 @@ public class CustomerService {
 
     public Optional<Customer> getCustomerById(Long id){
         return customerRepository.findById(id);
+    }
+
+    public Set<String> getCategories(Long id) {
+        return customerRepository.getCategories(id);
     }
 
     public void deleteCustomer(Long id){
