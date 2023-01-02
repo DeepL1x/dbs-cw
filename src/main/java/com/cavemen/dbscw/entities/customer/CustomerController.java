@@ -47,10 +47,10 @@ public class CustomerController {
 
     @PostMapping("/connect/{cust_id}/{cat_id}")
     public void connectToCategory(@PathVariable("cust_id") Long customerID, @PathVariable("cat_id") Long categoryID) {
-        ResponseEntity<Optional<Customer>> customer = getCustomer(customerID);
-        ResponseEntity<Optional<Category>> category = categoryController.getCategory(categoryID);
-        customer.getBody().get().addCategory(category.getBody().get());
-        customerService.connect(customerID, categoryID);
+        Customer customer = getCustomer(customerID).getBody().get();
+        Category category = categoryController.getCategory(categoryID).getBody().get();
+        if (!customer.getCategorySet().contains(category))
+            customerService.connect(customerID, categoryID);
     }
 
     @PutMapping(

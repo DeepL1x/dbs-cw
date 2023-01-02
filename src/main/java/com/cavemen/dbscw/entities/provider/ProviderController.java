@@ -2,6 +2,7 @@ package com.cavemen.dbscw.entities.provider;
 
 import com.cavemen.dbscw.entities.category.Category;
 import com.cavemen.dbscw.entities.category.CategoryController;
+import com.cavemen.dbscw.entities.customer.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,10 +47,10 @@ public class ProviderController {
 
     @PostMapping("/connect/{prov_id}/{cat_id}")
     public void connectToCategory(@PathVariable("prov_id") Long providerID, @PathVariable("cat_id") Long categoryID) {
-        ResponseEntity<Optional<Provider>> provider = getProvider(providerID);
-        ResponseEntity<Optional<Category>> category = categoryController.getCategory(categoryID);
-        provider.getBody().get().addCategory(category.getBody().get());
-        providerService.connect(providerID, categoryID);
+        Provider provider = getProvider(providerID).getBody().get();
+        Category category = categoryController.getCategory(categoryID).getBody().get();
+        if (!provider.getCategorySet().contains(category))
+            providerService.connect(providerID, categoryID);
     }
 
     @PutMapping(
