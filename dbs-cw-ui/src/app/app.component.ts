@@ -13,6 +13,8 @@ import {OrderService} from "./enities/order/order.service";
 import {InvoiceService} from "./enities/invoice/invoice.service";
 import {Order} from "./enities/order/order";
 import {Invoice} from "./enities/invoice/invoice";
+import {WorkerService} from "./enities/worker/worker.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 // import {addDocumentEL} from "../assets/js/script"
 
@@ -29,12 +31,15 @@ export class AppComponent {
   public orders: Order[] | undefined;
   public wishList: OrderItem[];
   public invoices: Invoice[];
+  public role: boolean | undefined;
+  public wishListAddition: boolean = false;
 
   constructor(private articleService: ArticleService,
               private readyItemService: ReadyItemService,
               private waitingItemService: WaitingItemService,
               private orderService: OrderService,
-              private invoiceService: InvoiceService) {
+              private invoiceService: InvoiceService,
+              private workerService: WorkerService) {
     this.wishList = []
     this.invoices = []
   }
@@ -201,6 +206,7 @@ export class AppComponent {
       }
     );
   }
+
   public addInvoice(form: NgForm): void {
     this.invoiceService.addInvoice(form.value.id).subscribe(
       (response: Invoice) => {
@@ -217,6 +223,21 @@ export class AppComponent {
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
+      }
+    );
+  }
+
+  public getWorkerStatus(form: NgForm): void {
+    this.workerService.getWorkerStatus(form.value).subscribe(
+      (response) => {
+        if (response.role == "MANAGER") {
+          this.role = true;
+        } else {
+          this.role = false;
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
       }
     );
   }
@@ -425,12 +446,15 @@ export class AppComponent {
     if (e.target.classList.contains("black-screen")) {
       this.BlackScreen();
     }
-    // @ts-ignore
-    if (e.target.parentNode.tagName == 'TR') {
-      this.SelectTableRow(<HTMLElement>e.target.parentNode);
+    if (this.wishListAddition) {
       // @ts-ignore
-      let wishId = e.target.parentNode.id;
-      this.OrderPopup(wishId);
+      if (e.target.parentNode.tagName == 'TR') {
+        const tabName = document.querySelector('.active-tab')?.innerHTML;
+        if (tabName == "ReadyItem"){this.SelectTableRow(<HTMLElement>e.target.parentNode);
+          // @ts-ignore
+          let wishId = e.target.parentNode.id;
+          this.OrderPopup(wishId);}
+      }
     }
     if (e.target.classList.contains("control-button")) {
       this.SelectControlButton(e.target)
@@ -438,11 +462,16 @@ export class AppComponent {
     console.log(e.target);
   }
 
+  public toggleWishListAddition() {
+    this.wishListAddition = !this.wishListAddition;
+  }
+
   public OrderPopup(wishId: string) {
     let wishAmount = prompt("Enter amount", "");
-    let item;
-    item = {"id": wishId, "value": Number(wishAmount)};
-    this.wishList?.push(<OrderItem><unknown>item);
+    if (Number(wishAmount) > 0){let item;
+      item = {"id": wishId, "value": Number(wishAmount)};
+      this.wishList?.push(<OrderItem><unknown>item);
+    }
   }
 
   public SelectControlButton(button: HTMLElement) {
@@ -565,7 +594,7 @@ export class AppComponent {
         form?.classList.add('form-visible');
         const rowVals = document.querySelector(".active-row")?.children;
         const inputs = form?.querySelectorAll('input');
-        if(rowVals != undefined && inputs != undefined) {
+        if (rowVals != undefined && inputs != undefined) {
           // @ts-ignore
           inputs[0].value = rowVals[0].innerHTML;
         }
@@ -677,13 +706,19 @@ export class AppComponent {
 
 
 // Функція показує всі приховані елементи, якщо користувач увійшов до аккаунту
-  public checkUser(user_login: boolean) {
-    const hidden_counter = document.getElementsByClassName("hidden-item").length;
-    if (user_login) {
-      for (let i = 0; i<hidden_counter; i++) {
-        document.getElementsByClassName("hidden-item")[0].classList.remove("hidden-item");
+  public checkUser(form: NgForm) {
+    this.getWorkerStatus(form);
+
+    setTimeout(() => {
+      const hidden_counter = document.getElementsByClassName("hidden-item").length;
+      if (this.role == true) {
+        for (let i = 0; i < hidden_counter; i++) {
+          document.getElementsByClassName("hidden-item")[0].classList.remove("hidden-item");
+        }
+      } else if (this.role == false) {
+
       }
-    }
+    }, 500)
   }
 
 }
