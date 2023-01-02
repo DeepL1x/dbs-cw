@@ -1,6 +1,7 @@
 package com.cavemen.dbscw.entities.order;
 
 import com.cavemen.dbscw.entities.article.Article;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +12,11 @@ public class OrderItem {
     private Long value;
     @MapsId
     @OneToOne
+    @JsonIgnore
     private Article article;
+
+    public OrderItem() {
+    }
 
     public OrderItem(String id, Long value) {
         this.id = id;
@@ -33,7 +38,7 @@ public class OrderItem {
 //    public Article getArticle() {
 //        return article;
 //    }
-
+    @JsonIgnore
     public void setArticle(Article article) {
         this.article = article;
     }

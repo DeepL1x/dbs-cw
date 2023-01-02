@@ -27,9 +27,9 @@ public class OrderController {
     }
 
     @PostMapping(
-            value = "/create",
-            consumes = "application/json",
-            produces = "application/json"
+            path = "/create",
+            consumes = "application/json;odata=verbose",
+            produces = "application/json;odata=verbose"
     )
     public ResponseEntity<Order> addArticle(@RequestBody Order order){
         return new ResponseEntity<>(orderService.createOrder(order).get(), HttpStatus.OK);

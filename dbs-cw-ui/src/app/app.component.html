@@ -12,21 +12,24 @@
 <div class="tab-section">
   <div class="tabs-container">
     <ul class="tabs-buttons">
-      <li id="articles" (click) = "tabFill('articles')">Article</li>
-      <li id="readyItems" (click) = "tabFill('readyItems')">ReadyItem</li>
-      <li id="waitingItems" (click) = "tabFill('waitingItems')">WaitingItem</li>
+      <li id="articles" class="hidden-item" (click)="tabFill('articles')">Article</li>
+      <li id="readyItems" (click)="tabFill('readyItems')">ReadyItem</li>
+      <li id="waitingItems" class="hidden-item" (click)="tabFill('waitingItems')">WaitingItem</li>
       <li id="invoices" (click)="tabFill('invoices')">Invoice</li>
       <li id="orders" (click)="tabFill('orders')">Order</li>
     </ul>
     <div class="btn-container">
-      <button id="add" class="control-button" (click)="PopUp('add')">Add</button>
-      <button id="edit" class="control-button" (click)="PopUp('edit')">Edit</button>
-      <button id="delete" class="control-button" (click)="PopUp('delete')">Delete</button>
+      <button id="add" class="control-button hidden-item" (click)="PopUp('add')">Add</button>
+      <button id="edit" class="control-button hidden-item" (click)="PopUp('edit')">Edit</button>
+      <button id="delete" class="control-button hidden-item" (click)="PopUp('delete')">Delete</button>
       <button id="order" class="control-button" (click)="PopUp('order')">Order</button>
+      <button id="create-invoice" class="control-button" (click)="PopUp('create-invoice')">Create invoice</button>
+      <button id="approve-invoice" class="control-button" (click)="PopUp('approve-invoice')">Approve invoice</button>
+<!--      <button id="dbg-btn" class="control-button" (click)="BlackScreen()">dbg-btn</button>-->
     </div>
     <div class="tabs-content">
       <div class="tab">
-        <div class="table-container">
+        <div class="table-container table-container-hidden">
           <table border="1">
             <tr class="headers"></tr>
             <table border="1"></table>
@@ -108,8 +111,8 @@
 
     <label for="order_wishlist">wishlist</label>
     <div style="display: flex; justify-content: space-around; width: 100%">
-        <span>id</span>
-        <span>value</span>
+      <span>id</span>
+      <span>value</span>
     </div>
     <table ngModel id="order_wishlist" name="wishList" style="width: 100%" border="1">
       <tr *ngFor="let wishItem of wishList">
@@ -120,10 +123,27 @@
     <button type="submit" [disabled]="orderForm.invalid">OK</button>
   </form>
 
+  <form #invoiceForm="ngForm" (ngSubmit)="onSubmit(invoiceForm)" id="invoice_form">
+    <label for="order_address">order_address</label>
+    <input ngModel type="text" id="invoice_id" name="id" required>
+    <button type="submit" [disabled]="invoiceForm.invalid">OK</button>
+  </form>
+
   <form #deleteForm="ngForm" (ngSubmit)="onSubmit(deleteForm)" id="del_form">
     <label for="del_form_id">id</label>
     <input id="del_form_id" name="id" ngModel type="text">
     <button type="submit" [disabled]="deleteForm.invalid">OK</button>
+  </form>
+
+  <form action="" (ngSubmit)="checkUser(true)" id="login-form">
+
+    <label for="#login">Login</label>
+    <input type="text" id="#login" name="login" placeholder="Enter your login here" required>
+
+    <label for="#password">Password</label>
+    <input type="text" id="#password" min="4" name="password" placeholder="Enter your password here" required>
+
+    <button type="submit">Log in</button>
   </form>
 </div>
 </body>

@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pet_seq")
-    @JsonIgnoreProperties
     private String id;
     private String address;
 
@@ -23,6 +22,15 @@ public class Order {
 
     @JsonIgnore
     private ArrayList<String> ids;
+
+    public Order() {
+    }
+
+    public Order(String address, ArrayList<OrderItem> wishList) {
+        this.address = address;
+        this.wishList = wishList;
+        ids = (ArrayList<String>) wishList.stream().map(OrderItem::getId).collect(Collectors.toList());
+    }
 
     public Order(String id, String address, ArrayList<OrderItem> wishList) {
         this.address = address;
@@ -56,6 +64,7 @@ public class Order {
         else this.wishList.add(customKeyValue);
     }
 
+    @JsonIgnore
     private int getIndex(String id){
         for(int i = 0; i < wishList.size(); i++){
             if(wishList.get(i).getId().equals(id))

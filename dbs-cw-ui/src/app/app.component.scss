@@ -36,6 +36,9 @@
     }
   }
 }
+.table-container-hidden {
+  display: none;
+}
 .table {
   border: 1px;
   height: min-content;
@@ -142,4 +145,16 @@ table {
 
 .form-visible{
   display: flex !important;
+}
+#login-form {
+  input {
+    padding: 5px 30px;
+  }
+  label:not(label:nth-child(0)) {
+    margin-top: 15px;
+  }
+  button {
+    margin-top: 30px;
+    padding: 5px 10px;
+  }
 }

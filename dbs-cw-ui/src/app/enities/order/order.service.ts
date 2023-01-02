@@ -22,7 +22,4 @@ export class OrderService {
   public getOrderById(id: number): Observable<Order>{
     return this.http.get<Order>(`${this.apiServerUrl}/order/getById/${id}`);
   }
-  // public getOrders(): Observable<Order[]>{
-  //   return this.http.get<Order[]>(`${this.apiServerUrl}/order/addItem`)
-  // }
 }

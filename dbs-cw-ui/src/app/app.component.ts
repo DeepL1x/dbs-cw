@@ -12,6 +12,7 @@ import {OrderItem} from "./enities/order/order-item";
 import {OrderService} from "./enities/order/order.service";
 import {InvoiceService} from "./enities/invoice/invoice.service";
 import {Order} from "./enities/order/order";
+import {Invoice} from "./enities/invoice/invoice";
 
 // import {addDocumentEL} from "../assets/js/script"
 
@@ -27,6 +28,7 @@ export class AppComponent {
   public waitingItems: WaitingItem[] | undefined;
   public orders: Order[] | undefined;
   public wishList: OrderItem[];
+  public invoices: Invoice[];
 
   constructor(private articleService: ArticleService,
               private readyItemService: ReadyItemService,
@@ -34,6 +36,7 @@ export class AppComponent {
               private orderService: OrderService,
               private invoiceService: InvoiceService) {
     this.wishList = []
+    this.invoices = []
   }
 
   ngOnInit() {
@@ -42,6 +45,7 @@ export class AppComponent {
     this.getWaitingItems();
     // @ts-ignore
     document.addEventListener('click', this.EventHandler.bind(this));
+    this.PopUp("login-form");
   }
 
   public getArticles(): void {
@@ -56,10 +60,8 @@ export class AppComponent {
   }
 
   public addArticle(form: NgForm): void {
-    console.log(form.value);
     this.articleService.addArticle(form.value).subscribe(
       (response: Article) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -70,7 +72,6 @@ export class AppComponent {
   public editArticle(form: NgForm): void {
     this.articleService.updateArticle(form.value).subscribe(
       (response: Article) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -80,7 +81,6 @@ export class AppComponent {
 
   public deleteArticle(form: NgForm): void {
     this.articleService.deleteArticle(form.value.id).subscribe((response: void) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -99,10 +99,8 @@ export class AppComponent {
   }
 
   public addReadyItem(form: NgForm): void {
-    console.log(form.value);
     this.readyItemService.addReadyItem(form.value).subscribe(
       (response: ReadyItem) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -113,7 +111,6 @@ export class AppComponent {
   public editReadyItem(form: NgForm): void {
     this.readyItemService.updateReadyItem(form.value).subscribe(
       (response: ReadyItem) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -123,7 +120,6 @@ export class AppComponent {
 
   public deleteReadyItem(form: NgForm): void {
     this.readyItemService.deleteReadyItem(form.value.id).subscribe((response: void) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -144,7 +140,6 @@ export class AppComponent {
   public addWaitingItem(form: NgForm): void {
     this.waitingItemService.addWaitingItem(form.value).subscribe(
       (response: WaitingItem) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -155,7 +150,6 @@ export class AppComponent {
   public editWaitingItem(form: NgForm): void {
     this.waitingItemService.updateWaitingItem(form.value).subscribe(
       (response: WaitingItem) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -165,7 +159,6 @@ export class AppComponent {
 
   public deleteWaitingItem(form: NgForm): void {
     this.waitingItemService.deleteWaitingItem(form.value.id).subscribe((response: void) => {
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -183,10 +176,44 @@ export class AppComponent {
     );
   }
 
-  public addOrder(form:NgForm): void{
+  public addOrder(form: NgForm): void {
     this.orderService.addOrder(form.value).subscribe(
       (response: Order) => {
-        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public getInvoices(): void {
+    // if (this.orders != undefined) {
+    //   for (const order of this.orders) {
+    //
+    //   }
+    // }
+    this.invoiceService.getInvoices().subscribe(
+      (response: Invoice[]) => {
+        this.invoices = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+  public addInvoice(form: NgForm): void {
+    this.invoiceService.addInvoice(form.value.id).subscribe(
+      (response: Invoice) => {
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public approveInvoice(form: NgForm): void {
+    this.invoiceService.approveInvoice(form.value.id).subscribe(
+      (response: Invoice) => {
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -195,12 +222,14 @@ export class AppComponent {
   }
 
   public tabFill(tabContentID: string) {
+    if (document.getElementsByClassName("table-container")[0].classList.contains("table-container-hidden")) {
+      document.getElementsByClassName("table-container-hidden")[0].classList.remove("table-container-hidden");
+    }
     this.SelectTab(tabContentID);
-    const tabsContainer = document.querySelector('.tabs-container');
+    // const tabsContainer = document.querySelector('.tabs-container');
     const table = document.querySelector('.table-container table table');
     // @ts-ignore
-    tabsContainer.querySelectorAll('.tabs-buttons li').forEach(item => item.classList.remove('active'));
-
+    // tabsContainer.querySelectorAll('.tabs-buttons li').forEach(item => item.classList.remove('active'));
     // @ts-ignore
     table.innerHTML = '';
     // angular.
@@ -208,12 +237,11 @@ export class AppComponent {
       case "articles" : {
         this.getArticles();
         window.setTimeout(() => {
+            const headers = document.querySelector('.headers');
+            // @ts-ignore
+            headers.innerHTML = '';
             if (this.articles != undefined) {
               const keys = Object.keys(this.articles[0])
-
-              const headers = document.querySelector('.headers');
-              // @ts-ignore
-              headers.innerHTML = '';
               for (let i = 0; i < keys.length; i++) {
                 const columnName = document.createElement('TD');
                 columnName.appendChild(document.createTextNode(keys[i]));
@@ -247,11 +275,11 @@ export class AppComponent {
       case "readyItems": {
         this.getReadyItems();
         window.setTimeout(() => {
+            const headers = document.querySelector('.headers');
+            // @ts-ignore
+            headers.innerHTML = '';
             if (this.readyItems != undefined) {
               const keys = Object.keys(this.readyItems[0])
-              const headers = document.querySelector('.headers');
-              // @ts-ignore
-              headers.innerHTML = '';
               for (let i = 0; i < keys.length; i++) {
                 const columnName = document.createElement('TD');
                 columnName.appendChild(document.createTextNode(keys[i]));
@@ -287,11 +315,11 @@ export class AppComponent {
       case "waitingItems": {
         this.getWaitingItems();
         window.setTimeout(() => {
+            const headers = document.querySelector('.headers');
+            // @ts-ignore
+            headers.innerHTML = '';
             if (this.waitingItems != undefined) {
               const keys = Object.keys(this.waitingItems[0])
-              const headers = document.querySelector('.headers');
-              // @ts-ignore
-              headers.innerHTML = '';
               for (let i = 0; i < keys.length; i++) {
                 const columnName = document.createElement('TD');
                 columnName.appendChild(document.createTextNode(keys[i]));
@@ -323,11 +351,11 @@ export class AppComponent {
       case "orders": {
         this.getOrders();
         window.setTimeout(() => {
-            if (this.orders != undefined) {
+            const headers = document.querySelector('.headers');
+            // @ts-ignore
+            headers.innerHTML = '';
+            if (this.orders != undefined && this.orders[0] != null) {
               const keys = Object.keys(this.orders[0])
-              const headers = document.querySelector('.headers');
-              // @ts-ignore
-              headers.innerHTML = '';
               for (let i = 0; i < keys.length; i++) {
                 const columnName = document.createElement('TD');
                 columnName.appendChild(document.createTextNode(keys[i]));
@@ -337,30 +365,31 @@ export class AppComponent {
               }
               // @ts-ignore
               headers.classList.add('headers');
-            }
-            // @ts-ignore
-            for (const order of this.orders) {
-              const tr = document.createElement("tr");
-              const keys = Object.keys(order);
-              for (let i = 0; i < keys.length; i++) {
-                tr.appendChild(document.createElement('td'));
+              for (const order of this.orders) {
+                const tr = document.createElement("tr");
+                const keys = Object.keys(order);
+                for (let i = 0; i < keys.length; i++) {
+                  tr.appendChild(document.createElement('td'));
+                }
+                tr?.cells[0].appendChild(document.createTextNode(String(order.id)));
+                tr?.cells[1].appendChild(document.createTextNode(String(order.address)));
+                tr?.cells[2].appendChild(document.createTextNode(String(order.wishList)));
+                table?.append(tr);
               }
-              tr?.cells[0].appendChild(document.createTextNode(String(order.address)));
-              tr?.cells[0].appendChild(document.createTextNode(String(order.wishList)));
-              table?.append(tr);
             }
             table?.classList.add('table');
           }
           , 100)
         break;
       }
-      case "invoices":{
+      case "invoices": {
+        this.getInvoices();
+        const headers = document.querySelector('.headers');
+        // @ts-ignore
+        headers.innerHTML = '';
         window.setTimeout(() => {
-            if (this.waitingItems != undefined) {
-              const keys = Object.keys(this.waitingItems[0])
-              const headers = document.querySelector('.headers');
-              // @ts-ignore
-              headers.innerHTML = '';
+            if (this.invoices != undefined && this.invoices.length > 0) {
+              const keys = Object.keys(this.invoices[0])
               for (let i = 0; i < keys.length; i++) {
                 const columnName = document.createElement('TD');
                 columnName.appendChild(document.createTextNode(keys[i]));
@@ -370,19 +399,19 @@ export class AppComponent {
               }
               // @ts-ignore
               headers.classList.add('headers');
-            }
-            // @ts-ignore
-            for (const waitingItem of this.waitingItems) {
-              const tr = document.createElement("tr");
-              const keys = Object.keys(waitingItem);
-              for (let i = 0; i < keys.length; i++) {
-                tr.appendChild(document.createElement('td'));
+
+              for (const invoice of this.invoices) {
+                const tr = document.createElement("tr");
+                const keys = Object.keys(this.invoices);
+                for (let i = 0; i < keys.length; i++) {
+                  tr.appendChild(document.createElement('td'));
+                }
+                tr?.cells[0].appendChild(document.createTextNode(invoice.id));
+                tr?.cells[1].appendChild(document.createTextNode(String(invoice.approved)));
+                tr?.cells[2].appendChild(document.createTextNode(String(invoice.items)));
+                tr?.cells[3].appendChild(document.createTextNode(String(invoice.totalSum)));
+                table?.append(tr);
               }
-              tr?.cells[0].appendChild(document.createTextNode(waitingItem.id));
-              tr?.cells[1].appendChild(document.createTextNode(String(waitingItem.totalItemAmount)));
-              tr?.cells[2].appendChild(document.createTextNode(String(waitingItem.price)));
-              tr?.cells[3].appendChild(document.createTextNode(waitingItem.measureUnit));
-              table?.append(tr);
             }
             table?.classList.add('table');
           }
@@ -402,7 +431,6 @@ export class AppComponent {
       // @ts-ignore
       let wishId = e.target.parentNode.id;
       this.OrderPopup(wishId);
-      console.log(wishId);
     }
     if (e.target.classList.contains("control-button")) {
       this.SelectControlButton(e.target)
@@ -410,7 +438,7 @@ export class AppComponent {
     console.log(e.target);
   }
 
-  public OrderPopup(wishId: string){
+  public OrderPopup(wishId: string) {
     let wishAmount = prompt("Enter amount", "");
     let item;
     item = {"id": wishId, "value": Number(wishAmount)};
@@ -455,59 +483,55 @@ export class AppComponent {
     } else {
       button?.classList.remove('active-control-button');
       container.classList.add("pop-up-container-hidden");
-      document.getElementsByClassName('form-visible')[0].classList.remove('form-visible');
+      if (document.getElementsByClassName('form-visible').length > 0) {
+        document.getElementsByClassName('form-visible')[0].classList.remove('form-visible');
+      }
     }
     const columns = document.querySelectorAll('.column-name');
     const row = document.querySelector('.active-row')
     const tableName = document.querySelector('.active-tab')?.innerHTML.toLowerCase();
     let i = 0;
+    let input;
     // @ts-ignore
     for (const column of columns) {
-      let input;
-      if  (mode != "delete") {
+      if (mode != "delete") {
         input = document.getElementById(tableName + `_${column.innerHTML}`);
-      }
-      else {
-        input = document.getElementById("del_form");
-      }
-      // @ts-ignore
-      if (row != null && input != null) {
-        console.log(row.children[i].innerHTML);
         // @ts-ignore
-        input.value = String(row.children[i].innerHTML);
+        if (row != null && input != null) {
+          // @ts-ignore
+          input.value = String(row.children[i].innerHTML);
+        }
+        i++;
       }
-      i++;
     }
 
     switch (mode) {
-      case "add":{
+      case "add": {
         const form = document.getElementById("add_" + tableName + "_form");
         const rowVals = document.querySelector(".active-row")?.children;
         form?.classList.add('form-visible');
         const inputs = form?.querySelectorAll('input');
         // @ts-ignore
-        for (let j = 0; j < rowVals.length; j++) {
-          // @ts-ignore
-          inputs[j].value = rowVals[j].innerHTML;
+        if (rowVals != undefined) {
+          for (let j = 0; j < rowVals.length; j++) {
+            // @ts-ignore
+            inputs[j].value = rowVals[j].innerHTML;
+          }
         }
         break;
       }
       case "edit": {
-        console.log(mode);
         const form = document.getElementById("add_" + tableName + "_form");
         const rowVals = document.querySelector(".active-row")?.children;
         form?.classList.add('form-visible');
         const inputs = form?.querySelectorAll('input');
         // @ts-ignore
-        for (let j = 0; j < rowVals.length; j++) {
-          // @ts-ignore
-          inputs[j].value = rowVals[j].innerHTML;
+        if (rowVals != undefined) {
+          for (let j = 0; j < rowVals.length; j++) {
+            // @ts-ignore
+            inputs[j].value = rowVals[j].innerHTML;
+          }
         }
-        break;
-      }
-      case "order": {
-        const form = document.getElementById("add_order_form");
-        form?.classList.add('form-visible');
         break;
       }
       case "delete": {
@@ -515,23 +539,55 @@ export class AppComponent {
         form?.classList.add('form-visible');
         const rowVals = document.querySelector(".active-row")?.children;
         const inputs = form?.querySelectorAll('input');
-        // @ts-ignore
-        inputs[0].value = rowVals[0].innerHTML;
+        if (rowVals != undefined) {
+          // @ts-ignore
+          inputs[0].value = rowVals[0].innerHTML;
+        }
+
         break;
       }
+      case "order": {
+        const form = document.getElementById("add_order_form");
+        form?.classList.add('form-visible');
+        break;
+      }
+      case "create-invoice": {
+        const form = document.getElementById("invoice_form");
+        form?.classList.add('form-visible');
+        const rowVals = document.querySelector(".active-row")?.children;
+        const inputs = form?.querySelectorAll('input');
+
+
+        break;
+      }
+      case "approve-invoice": {
+        const form = document.getElementById("invoice_form");
+        form?.classList.add('form-visible');
+        const rowVals = document.querySelector(".active-row")?.children;
+        const inputs = form?.querySelectorAll('input');
+        if(rowVals != undefined && inputs != undefined) {
+          // @ts-ignore
+          inputs[0].value = rowVals[0].innerHTML;
+        }
+
+        break;
+      }
+      case "login-form": {
+        const form = document.getElementById("login-form");
+        form?.classList.add('form-visible');
+        break;
+      }
+
     }
   }
 
   public onSubmit(form: NgForm) {
-    console.log(form.value);
     // @ts-ignore
-    switch (document.querySelector('.active-tab').innerHTML) {
-      case 'Article': {
-        console.log('in the tab');
+    switch (document.querySelector('.active-tab').id) {
+      case 'articles': {
         // @ts-ignore
         switch (document.querySelector('.active-control-button').innerHTML) {
           case 'Add': {
-            console.log('in the add');
             this.addArticle(form);
             break;
           }
@@ -546,7 +602,7 @@ export class AppComponent {
         }
         break;
       }
-      case 'ReadyItem': {
+      case 'readyItems': {
         // @ts-ignore
         switch (document.querySelector('.active-control-button').innerHTML) {
           case 'Add': {
@@ -561,14 +617,14 @@ export class AppComponent {
             this.deleteReadyItem(form);
             break;
           }
-          case 'Order':{
+          case 'Order': {
             form.value.wishList = this.wishList;
-            this.addOrder(form.value);
+            this.addOrder(form);
           }
         }
         break;
       }
-      case 'WaitingItem': {
+      case 'waitingItems': {
         // @ts-ignore
         switch (document.querySelector('.active-control-button').innerHTML) {
           case 'Add': {
@@ -583,10 +639,27 @@ export class AppComponent {
             this.deleteWaitingItem(form);
             break;
           }
-          case 'Order':{
+        }
+        break;
+      }
+      case 'orders': {
+        // @ts-ignore
+        switch (document.querySelector('.active-control-button').id) {
+          case 'create-invoice': {
+            this.addInvoice(form);
+            break;
           }
         }
         break;
+      }
+      case 'invoices': {
+        // @ts-ignore
+        switch (document.querySelector('.active-control-button').id) {
+          case 'approve-invoice': {
+            this.approveInvoice(form);
+            break;
+          }
+        }
       }
     }
   }
@@ -602,7 +675,19 @@ export class AppComponent {
     }
   }
 
+
+// Функція показує всі приховані елементи, якщо користувач увійшов до аккаунту
+  public checkUser(user_login: boolean) {
+    const hidden_counter = document.getElementsByClassName("hidden-item").length;
+    if (user_login) {
+      for (let i = 0; i<hidden_counter; i++) {
+        document.getElementsByClassName("hidden-item")[0].classList.remove("hidden-item");
+      }
+    }
+  }
+
 }
+
 
 
 

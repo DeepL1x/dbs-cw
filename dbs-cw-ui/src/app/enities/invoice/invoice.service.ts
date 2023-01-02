@@ -13,13 +13,16 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) { }
 
-  public getInvoices(): Observable<Invoice[]>{
-    return this.http.get<Invoice[]>(`${this.apiServerUrl}/invoice/getInvoice`);
+  public getInvoice(id: string): Observable<Invoice>{
+    return this.http.get<Invoice>(`${this.apiServerUrl}/invoice/getInvoice/${id}`);
   }
-  public addInvoice(id: number): Observable<Invoice>{
+  public getInvoices(): Observable<Invoice[]>{
+    return this.http.get<Invoice[]>(`${this.apiServerUrl}/invoice/all`);
+  }
+  public addInvoice(id: string): Observable<Invoice>{
     return this.http.post<Invoice>(`${this.apiServerUrl}/invoice/createInvoice/${id}`, null);
   }
-  public approveInvoice(id: number): Observable<Invoice>{
+  public approveInvoice(id: string): Observable<Invoice>{
     return this.http.post<Invoice>(`${this.apiServerUrl}/invoice/approve/${id}`, null);
   }
 }

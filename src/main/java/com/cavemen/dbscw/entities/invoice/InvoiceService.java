@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,10 +32,14 @@ public class InvoiceService {
         return invoiceReposetory.findById(id);
     }
 
+    public List<Invoice> getInvoices(){
+        return invoiceReposetory.findAll();
+    }
+
     public Optional<Invoice> createInvoice(String id) {
         Optional<Order> order = orderRepository.findById(id);
         boolean flag = true;
-        ArrayList<OrderItem> wishList = order.get().getWishList();
+        ArrayList<OrderItem> wishList = new ArrayList<>(order.get().getWishList());
         ArrayList<InvoiceItem> items = new ArrayList<>();
         for (OrderItem wishItem : wishList) {
             InvoiceItem item = null;
