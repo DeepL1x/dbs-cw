@@ -18,19 +18,17 @@ public class WaitingItem {
     public WaitingItem() {
     }
 
-    public WaitingItem(Long totalItemAmount, Double price, String measureUnit, Article article) {
+    public WaitingItem(Long totalItemAmount, Double price, String measureUnit) {
         this.totalItemAmount = totalItemAmount;
         this.price = price;
         this.measureUnit = measureUnit;
-        this.article = article;
     }
 
-    public WaitingItem(String id, Long totalItemAmount, Double price, String measureUnit, Article article) {
+    public WaitingItem(String id, Long totalItemAmount, Double price, String measureUnit) {
         this.id = id;
         this.totalItemAmount = totalItemAmount;
         this.price = price;
         this.measureUnit = measureUnit;
-        this.article = article;
     }
 
     public String getId() {

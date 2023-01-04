@@ -2,6 +2,8 @@ package com.cavemen.dbscw.entities.waitingItem;
 
 import com.cavemen.dbscw.entities.article.Article;
 import com.cavemen.dbscw.entities.article.ArticleRepository;
+import com.cavemen.dbscw.entities.readyItem.ReadyItem;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,13 @@ public class WaitingItemService {
     }
 
     public WaitingItem updateItem(WaitingItem waitingItem){
+        WaitingItem itemEntity = waitingItemRepository.findById(waitingItem.getId()).get();
+        WaitingItem returnEntity = new WaitingItem(
+                waitingItem.getTotalItemAmount(),
+                waitingItem.getPrice(),
+                waitingItem.getMeasureUnit()
+        );
+        BeanUtils.copyProperties(returnEntity, itemEntity, "id");
         return waitingItemRepository.save(waitingItem);
     }
 

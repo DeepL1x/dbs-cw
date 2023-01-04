@@ -192,11 +192,6 @@ export class AppComponent {
   }
 
   public getInvoices(): void {
-    // if (this.orders != undefined) {
-    //   for (const order of this.orders) {
-    //
-    //   }
-    // }
     this.invoiceService.getInvoices().subscribe(
       (response: Invoice[]) => {
         this.invoices = response;
@@ -299,7 +294,7 @@ export class AppComponent {
             const headers = document.querySelector('.headers');
             // @ts-ignore
             headers.innerHTML = '';
-            if (this.readyItems != undefined) {
+            if (this.readyItems != undefined && this.readyItems[0] != null) {
               const keys = Object.keys(this.readyItems[0])
               for (let i = 0; i < keys.length; i++) {
                 const columnName = document.createElement('TD');
@@ -394,7 +389,7 @@ export class AppComponent {
                 }
                 tr?.cells[0].appendChild(document.createTextNode(String(order.id)));
                 tr?.cells[1].appendChild(document.createTextNode(String(order.address)));
-                tr?.cells[2].appendChild(document.createTextNode(String(order.wishList)));
+                tr?.cells[2].appendChild(document.createTextNode(JSON.stringify(order.wishList)));
                 table?.append(tr);
               }
             }
@@ -423,13 +418,13 @@ export class AppComponent {
 
               for (const invoice of this.invoices) {
                 const tr = document.createElement("tr");
-                const keys = Object.keys(this.invoices);
+                const keys = Object.keys(this.invoices[0]);
                 for (let i = 0; i < keys.length; i++) {
                   tr.appendChild(document.createElement('td'));
                 }
                 tr?.cells[0].appendChild(document.createTextNode(invoice.id));
                 tr?.cells[1].appendChild(document.createTextNode(String(invoice.approved)));
-                tr?.cells[2].appendChild(document.createTextNode(String(invoice.items)));
+                tr?.cells[2].appendChild(document.createTextNode(JSON.stringify(invoice.items)));
                 tr?.cells[3].appendChild(document.createTextNode(String(invoice.totalSum)));
                 table?.append(tr);
               }
@@ -446,15 +441,17 @@ export class AppComponent {
     if (e.target.classList.contains("black-screen")) {
       this.BlackScreen();
     }
-    if (this.wishListAddition) {
-      // @ts-ignore
-      if (e.target.parentNode.tagName == 'TR') {
-        const tabName = document.querySelector('.active-tab')?.innerHTML;
-        if (tabName == "ReadyItem"){this.SelectTableRow(<HTMLElement>e.target.parentNode);
+    // @ts-ignore
+    if (e.target.parentNode.tagName == 'TR') {
+      const tabName = document.querySelector('.active-tab')?.innerHTML;
+      if (tabName == "ReadyItem") {
+        if (this.wishListAddition) {
           // @ts-ignore
           let wishId = e.target.parentNode.id;
-          this.OrderPopup(wishId);}
+          this.OrderPopup(wishId);
+        }
       }
+      this.SelectTableRow(<HTMLElement>e.target.parentNode);
     }
     if (e.target.classList.contains("control-button")) {
       this.SelectControlButton(e.target)
@@ -468,7 +465,8 @@ export class AppComponent {
 
   public OrderPopup(wishId: string) {
     let wishAmount = prompt("Enter amount", "");
-    if (Number(wishAmount) > 0){let item;
+    if (Number(wishAmount) > 0) {
+      let item;
       item = {"id": wishId, "value": Number(wishAmount)};
       this.wishList?.push(<OrderItem><unknown>item);
     }
@@ -585,7 +583,10 @@ export class AppComponent {
         form?.classList.add('form-visible');
         const rowVals = document.querySelector(".active-row")?.children;
         const inputs = form?.querySelectorAll('input');
-
+        if (rowVals != undefined && inputs != undefined) {
+          // @ts-ignore
+          inputs[0].value = rowVals[0].innerHTML;
+        }
 
         break;
       }

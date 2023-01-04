@@ -23,6 +23,7 @@ export class ReadyItemService {
     return this.http.post<ReadyItem>(`${this.apiServerUrl}/readyItem/add`, readyItem);
   }
   public updateReadyItem(readyItem: ReadyItem): Observable<ReadyItem>{
+    console.log(readyItem)
     return this.http.put<ReadyItem>(`${this.apiServerUrl}/readyItem/update`, readyItem);
   }
   public deleteReadyItem(id: string): Observable<void>{

@@ -25,6 +25,7 @@
       <button id="order" class="control-button" (click)="PopUp('order')">Order</button>
       <button id="create-invoice" class="control-button" (click)="PopUp('create-invoice')">Create invoice</button>
       <button id="approve-invoice" class="control-button" (click)="PopUp('approve-invoice')">Approve invoice</button>
+      <button id="toggle-wish" class="control-button" (click)="toggleWishListAddition()">Select</button>
 <!--      <button id="dbg-btn" class="control-button" (click)="BlackScreen()">dbg-btn</button>-->
     </div>
     <div class="tabs-content">
@@ -44,7 +45,7 @@
 <div class="pop-up-container pop-up-container-hidden">
   <form #articleForm="ngForm" (ngSubmit)="onSubmit(articleForm)" id="add_article_form">
     <label for="article_id">id</label>
-    <input ngModel type="text" id="article_id" name="id">
+    <input ngModel type="text" id="article_id" name="id" minlength="8" maxlength="8">
 
     <label for="article_productNameUA">productNameUA</label>
     <input ngModel type="text" id="article_productNameUA" name="productNameUA" required>
@@ -66,7 +67,7 @@
 
   <form #readyItemForm="ngForm" (ngSubmit)="onSubmit(readyItemForm)" id="add_readyitem_form">
     <label for="ready_item_id">id</label>
-    <input ngModel type="text" id="ready_item_id" name="id">
+    <input ngModel type="text" id="ready_item_id" name="id" minlength="8" maxlength="8" required>
 
     <label for="ready_item_totalItemAmount">totalItemAmount</label>
     <input ngModel type="text" id="ready_item_totalItemAmount" name="totalItemAmount" required>
@@ -91,7 +92,7 @@
 
   <form #waitingItemForm="ngForm" (ngSubmit)="onSubmit(waitingItemForm)" id="add_waitingitem_form">
     <label for="waiting_item_id">id</label>
-    <input ngModel type="text" id="waiting_item_id" name="id">
+    <input ngModel type="text" id="waiting_item_id" name="id" minlength="8" maxlength="8" required>
 
     <label for="waiting_item_totalItemAmount">totalItemAmount</label>
     <input ngModel type="text" id="waiting_item_totalItemAmount" name="totalItemAmount" required>
@@ -124,24 +125,24 @@
   </form>
 
   <form #invoiceForm="ngForm" (ngSubmit)="onSubmit(invoiceForm)" id="invoice_form">
-    <label for="order_address">order_address</label>
-    <input ngModel type="text" id="invoice_id" name="id" required>
+    <label for="invoice_id">order id</label>
+    <input ngModel type="text" id="invoice_id" name="id" minlength="1" required>
     <button type="submit" [disabled]="invoiceForm.invalid">OK</button>
   </form>
 
   <form #deleteForm="ngForm" (ngSubmit)="onSubmit(deleteForm)" id="del_form">
     <label for="del_form_id">id</label>
-    <input id="del_form_id" name="id" ngModel type="text">
+    <input id="del_form_id" name="id" ngModel type="text" required>
     <button type="submit" [disabled]="deleteForm.invalid">OK</button>
   </form>
 
-  <form action="" (ngSubmit)="checkUser(true)" id="login-form">
+  <form #loginForm="ngForm" (ngSubmit)="checkUser(loginForm)" id="login-form">
 
-    <label for="#login">Login</label>
-    <input type="text" id="#login" name="login" placeholder="Enter your login here" required>
+    <label for="#login_id">Login</label>
+    <input ngModel type="text" id="#login_id" name="id" placeholder="Enter your login here" required>
 
-    <label for="#password">Password</label>
-    <input type="text" id="#password" min="4" name="password" placeholder="Enter your password here" required>
+    <label for="#password_id">Password</label>
+    <input ngModel type="text" id="#password_id" min="4" name="password" placeholder="Enter your password here" required>
 
     <button type="submit">Log in</button>
   </form>

@@ -24,8 +24,6 @@ public class ArticleController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Article>> getArticles(){
-//        userForAuthorizationRepository.save(new UserForAuthorization("3","password"));
-//        System.out.println(userForAuthorizationRepository.findById("3").get().getPassword());
         return new ResponseEntity<>(articleService.getArticles(), HttpStatus.OK);
     }
 

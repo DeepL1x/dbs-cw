@@ -1,5 +1,7 @@
 package com.cavemen.dbscw.entities.article;
 
+import com.cavemen.dbscw.entities.readyItem.ReadyItem;
+import com.cavemen.dbscw.entities.waitingItem.WaitingItem;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -24,9 +26,14 @@ public class Article {
     private Date expirationTerm;
     @Transient
     private boolean disposalNeeded;
-    @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "article", cascade = CascadeType.REMOVE)
     @PrimaryKeyJoinColumn
-    private com.cavemen.dbscw.entities.readyItem.ReadyItem readyItem;
+    private ReadyItem readyItem;
+
+    @OneToOne(mappedBy = "article", cascade = CascadeType.REMOVE)
+    @PrimaryKeyJoinColumn
+    private WaitingItem waitingItem;
 
     public Article() {
 
