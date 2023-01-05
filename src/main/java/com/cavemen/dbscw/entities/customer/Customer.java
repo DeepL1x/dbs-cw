@@ -22,6 +22,8 @@ public class Customer {
 
     private String country;
 
+    private String address;
+
     @Relationship(type = "PREFERS", direction = Relationship.Direction.OUTGOING)
     private Set<Category> categorySet = new HashSet<>();
 
@@ -57,6 +59,14 @@ public class Customer {
         this.country = country;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Set<Category> getCategorySet() {
         return categorySet;
     }
@@ -67,11 +77,12 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(Long id, String login, String name, String country) {
+    public Customer(Long id, String login, String name, String country, String address) {
         this.id = id;
         this.login = login;
         this.name = name;
         this.country = country;
+        this.address = address;
     }
 
     public void addCategory(Category category) {
@@ -83,7 +94,7 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return id.equals(customer.id) && Objects.equals(login, customer.login) && Objects.equals(name, customer.name) && Objects.equals(country, customer.country) && Objects.equals(categorySet, customer.categorySet);
+        return id.equals(customer.id) && Objects.equals(login, customer.login) && Objects.equals(name, customer.name) && Objects.equals(country, customer.country) && Objects.equals(categorySet, customer.categorySet) && Objects.equals(address, customer.address);
     }
 
     @Override

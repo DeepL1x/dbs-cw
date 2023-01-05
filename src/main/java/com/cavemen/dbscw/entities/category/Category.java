@@ -1,5 +1,7 @@
 package com.cavemen.dbscw.entities.category;
 
+import com.cavemen.dbscw.entities.customer.Customer;
+import com.cavemen.dbscw.entities.provider.Provider;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -17,11 +19,11 @@ public class Category {
 
     private String title;
 
-    @Relationship(type = "PREFERS", direction = Relationship.Direction.INCOMING)
-    private Set<Category> customerSet = new HashSet<>();
+//    @Relationship(type = "PREFERS", direction = Relationship.Direction.INCOMING)
+//    private Set<Customer> customerSet = new HashSet<>();
 
-    @Relationship(type = "PROVIDE", direction = Relationship.Direction.INCOMING)
-    private Set<Category> providerSet = new HashSet<>();;
+//    @Relationship(type = "PROVIDE", direction = Relationship.Direction.INCOMING)
+//    private Set<Provider> providerSet = new HashSet<>();;
 
     public Category() {}
 
@@ -46,21 +48,21 @@ public class Category {
         this.title = title;
     }
 
-    public Set<Category> getCustomerSet() {
+    /*public Set<Customer> getCustomerSet() {
         return customerSet;
     }
 
-    public void setCustomerSet(Set<Category> customerSet) {
+    public void setCustomerSet(Set<Customer> customerSet) {
         this.customerSet = customerSet;
     }
 
-    public Set<Category> getProviderSet() {
+    public Set<Provider> getProviderSet() {
         return providerSet;
     }
 
-    public void setProviderSet(Set<Category> providerSet) {
+    public void setProviderSet(Set<Provider> providerSet) {
         this.providerSet = providerSet;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
