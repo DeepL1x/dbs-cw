@@ -1,6 +1,5 @@
 package com.cavemen.dbscw.entities.userForAuthorizationService;
 
-import com.cavemen.dbscw.entities.readyItem.ReadyItem;
 import com.cavemen.dbscw.entities.worker.Worker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +35,6 @@ public class UserForAuthorizationController {
 
   @PostMapping(
       value = "/addUsersForAuth"
-//      consumes = "application/json",
-//      produces = "application/json"
   )
   public void addUsersForAuth() {
     UserForAuthorization user1 = new UserForAuthorization("login1","password1");

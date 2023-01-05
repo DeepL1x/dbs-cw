@@ -26,7 +26,6 @@ public class UserForAuthorizationService {
           .get().getPassword().
           equals(userForAuthorization.getPassword()))
         throw new CustomException(ErrorCode.Invalid_User_Login_Or_Password);
-      //TODO звідси починати конект з Neo4j
       return workerService.getByLogin(userForAuthorization.getId());
   }
 
