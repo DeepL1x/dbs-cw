@@ -14,12 +14,10 @@ import java.util.Optional;
 @RequestMapping("/article")
 public class ArticleController {
     private final ArticleService articleService;
-    private final UserForAuthorizationRepository userForAuthorizationRepository;
 
     @Autowired
-    public ArticleController(ArticleService articleService, UserForAuthorizationRepository userForAuthorizationRepository) {
+    public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
-        this.userForAuthorizationRepository = userForAuthorizationRepository;
     }
 
     @GetMapping("/all")
@@ -38,7 +36,6 @@ public class ArticleController {
             produces = "application/json"
     )
     public ResponseEntity<Article> addArticle(@RequestBody Article article){
-        System.out.println(article.toString());
         return new ResponseEntity<>(articleService.addArticle(article), HttpStatus.OK);
     }
 
