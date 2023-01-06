@@ -37,8 +37,8 @@ public class UserForAuthorizationController {
       value = "/addUsersForAuth"
   )
   public void addUsersForAuth() {
-    UserForAuthorization user1 = new UserForAuthorization("login1","password1");
-    UserForAuthorization user2 = new UserForAuthorization("login2","password2");
+    UserForAuthorization user1 = new UserForAuthorization("login11","password11");
+    UserForAuthorization user2 = new UserForAuthorization("login22","password22");
     userForAuthorizationService.save(user1);
     userForAuthorizationService.save(user2);
   }
